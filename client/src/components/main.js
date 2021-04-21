@@ -3,7 +3,9 @@ import React, { useState } from 'react';
 import axios from 'axios';
 
 const Main = () => {
+	const [inputs, setInputs] = useState(1);
 	const [subreddit, setSubreddit] = useState('');
+	const [subredditName, setSubredditName] = useState('');
 	const [postList, setPostList] = useState([]);
 
 	const handleSubreddit = (e) => {
@@ -20,6 +22,8 @@ const Main = () => {
 		axios.post('http://localhost:3010/', reqObj).then((res) => {
 			setPostList(res.data);
 		});
+
+		setSubredditName(subreddit);
 	};
 
 	return (
@@ -43,7 +47,7 @@ const Main = () => {
 				<div>
 					<table>
 						<theader>
-							<th>Top Posts</th>
+							<th>Top Posts from {subreddit}</th>
 						</theader>
 						<tbody>
 							{postList &&

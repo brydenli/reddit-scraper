@@ -1,5 +1,11 @@
+@font-face {
+	font-family: RobotoMono-Light;
+	src: url(../fonts/RobotoMono-Light.ttf);
+}
+
 * {
-	color: white;
+	font-family: RobotoMono-Light;
+	color: rgb(7, 255, 69);
 	background-color: black;
 }
 
