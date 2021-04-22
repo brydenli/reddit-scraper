@@ -17,6 +17,32 @@ app.post('/', (req, res) => {
 	}
 });
 
+app.post('/two', (req, res) => {
+	let resObj = {};
+	let postlist1 = [];
+	let postlist2 = [];
+	try {
+		scraper(req.body.subreddit1)
+			.then((response) => {
+				postlist1 = response;
+			})
+			.then(() => {
+				scraper(req.body.subreddit2).then((response) => {
+					postlist2 = response;
+				});
+			})
+			.then(() => {
+				resObj = {
+					postlist1,
+					postlist2,
+				};
+				res.status(200).json(resObj);
+			});
+	} catch (err) {
+		res.status(400).json(err);
+	}
+});
+
 app.listen(port, () => {
 	console.log(`Server is listening on port ${port}`);
 });
