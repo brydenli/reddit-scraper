@@ -1,4 +1,4 @@
-import scraper1 from './scraper.js';
+import scraper from './scraper.js';
 import express from 'express';
 import cors from 'cors';
 const app = express();
@@ -9,7 +9,7 @@ app.use(express.json());
 
 app.post('/', (req, res) => {
 	try {
-		scraper1(req.body.subreddit).then((response) => {
+		scraper(req.body.subreddit).then((response) => {
 			res.status(200).json(response);
 		});
 	} catch (err) {
