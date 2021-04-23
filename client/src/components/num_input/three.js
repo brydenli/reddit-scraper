@@ -9,6 +9,7 @@ const Three = () => {
 	const [postList1, setPostList1] = useState([]);
 	const [postList2, setPostList2] = useState([]);
 	const [postList3, setPostList3] = useState([]);
+	const [flag, setFlag] = useState(false);
 
 	const handleSubreddit1 = (e) => {
 		setSubreddit1(e.target.value);
@@ -25,15 +26,35 @@ const Three = () => {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 
-		const reqObj = {
+		const reqObj1 = {
 			subreddit: subreddit1,
 		};
 
-		axios.post('http://localhost:3010/', reqObj).then((res) => {
+		const reqObj2 = {
+			subreddit: subreddit2,
+		};
+
+		const reqObj3 = {
+			subreddit: subreddit3,
+		};
+
+		axios.post('http://localhost:3010/', reqObj1).then((res) => {
+			console.log(res);
 			setPostList1(res.data);
 		});
 
-		// setSubredditName(subreddit);
+		axios.post('http://localhost:3010/', reqObj2).then((res) => {
+			console.log(res);
+			setPostList2(res.data);
+		});
+
+		axios.post('http://localhost:3010/', reqObj3).then((res) => {
+			console.log(res);
+			setPostList3(res.data);
+		});
+
+		setSubredditName([subreddit1, subreddit2, subreddit3]);
+		setFlag(true);
 	};
 	return (
 		<div>
@@ -65,57 +86,63 @@ const Three = () => {
 					</button>
 				</div>
 			</form>
-			<div>
-				<table>
-					<theader>
-						<th>Top Posts from {subredditName[0]}</th>
-					</theader>
-					<tbody>
-						{postList1 &&
-							postList1.map((post) => {
-								return (
-									<tr>
-										<td>{post}</td>
-									</tr>
-								);
-							})}
-					</tbody>
-				</table>
-			</div>
-			<div>
-				<table>
-					<theader>
-						<th>Top Posts from {subredditName[1]}</th>
-					</theader>
-					<tbody>
-						{postList2 &&
-							postList2.map((post) => {
-								return (
-									<tr>
-										<td>{post}</td>
-									</tr>
-								);
-							})}
-					</tbody>
-				</table>
-			</div>
-			<div>
-				<table>
-					<theader>
-						<th>Top Posts from {subredditName[2]}</th>
-					</theader>
-					<tbody>
-						{postList3 &&
-							postList3.map((post) => {
-								return (
-									<tr>
-										<td>{post}</td>
-									</tr>
-								);
-							})}
-					</tbody>
-				</table>
-			</div>
+			{flag ? (
+				<div>
+					<div>
+						<table>
+							<theader>
+								<th>Top Posts from {subredditName[0]}</th>
+							</theader>
+							<tbody>
+								{postList1 &&
+									postList1.map((post) => {
+										return (
+											<tr>
+												<td>{post}</td>
+											</tr>
+										);
+									})}
+							</tbody>
+						</table>
+					</div>
+					<div>
+						<table>
+							<theader>
+								<th>Top Posts from {subredditName[1]}</th>
+							</theader>
+							<tbody>
+								{postList2 &&
+									postList2.map((post) => {
+										return (
+											<tr>
+												<td>{post}</td>
+											</tr>
+										);
+									})}
+							</tbody>
+						</table>
+					</div>
+					<div>
+						<table>
+							<theader>
+								<th>Top Posts from {subredditName[2]}</th>
+							</theader>
+							<tbody>
+								{postList3 &&
+									postList3.map((post) => {
+										return (
+											<tr>
+												<td>{post}</td>
+											</tr>
+										);
+									})}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			) : (
+				<div></div>
+			)}
 		</div>
 	);
 };

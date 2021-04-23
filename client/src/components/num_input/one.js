@@ -5,6 +5,7 @@ const One = () => {
 	const [subreddit1, setSubreddit1] = useState('');
 	const [subredditName, setSubredditName] = useState([]);
 	const [postList1, setPostList1] = useState([]);
+	const [flag, setFlag] = useState(false);
 
 	const handleSubreddit = (e) => {
 		setSubreddit1(e.target.value);
@@ -22,6 +23,7 @@ const One = () => {
 		});
 
 		setSubredditName(subreddit1);
+		setFlag(true);
 	};
 
 	return (
@@ -40,23 +42,29 @@ const One = () => {
 					</button>
 				</div>
 			</form>
-			<div>
-				<table>
-					<theader>
-						<th>Top Posts from {subredditName}</th>
-					</theader>
-					<tbody>
-						{postList1 &&
-							postList1.map((post) => {
-								return (
-									<tr>
-										<td>{post}</td>
-									</tr>
-								);
-							})}
-					</tbody>
-				</table>
-			</div>
+			{flag ? (
+				<div>
+					<div>
+						<table>
+							<theader>
+								<th>Top Posts from {subredditName}</th>
+							</theader>
+							<tbody>
+								{postList1 &&
+									postList1.map((post) => {
+										return (
+											<tr>
+												<td>{post}</td>
+											</tr>
+										);
+									})}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			) : (
+				<div></div>
+			)}
 		</div>
 	);
 };

@@ -7,6 +7,7 @@ const Two = () => {
 	const [subredditName, setSubredditName] = useState([]);
 	const [postList1, setPostList1] = useState([]);
 	const [postList2, setPostList2] = useState([]);
+	const [flag, setFlag] = useState(false);
 
 	const handleSubreddit1 = (e) => {
 		setSubreddit1(e.target.value);
@@ -19,18 +20,26 @@ const Two = () => {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 
-		const reqObj = {
-			subreddit1: subreddit1,
-			subreddit2: subreddit2,
+		const reqObj1 = {
+			subreddit: subreddit1,
 		};
 
-		axios.post('http://localhost:3010/two', reqObj).then((res) => {
-			setPostList1(res.data.postList1);
-			setPostList2(res.data.postList2);
+		const reqObj2 = {
+			subreddit: subreddit2,
+		};
+
+		axios.post('http://localhost:3010/', reqObj1).then((res) => {
+			console.log(res);
+			setPostList1(res.data);
 		});
 
-		// setSubredditName(subreddit);
-		// change the scraper, not the server
+		axios.post('http://localhost:3010/', reqObj2).then((res) => {
+			console.log(res);
+			setPostList2(res.data);
+		});
+
+		setSubredditName([subreddit1, subreddit2]);
+		setFlag(true);
 	};
 
 	return (
@@ -56,40 +65,46 @@ const Two = () => {
 					</button>
 				</div>
 			</form>
-			<div>
-				<table>
-					<theader>
-						<th>Top Posts from {subredditName[0]}</th>
-					</theader>
-					<tbody>
-						{postList1 &&
-							postList1.map((post) => {
-								return (
-									<tr>
-										<td>{post}</td>
-									</tr>
-								);
-							})}
-					</tbody>
-				</table>
-			</div>
-			<div>
-				<table>
-					<theader>
-						<th>Top Posts from {subredditName[1]}</th>
-					</theader>
-					<tbody>
-						{postList2 &&
-							postList2.map((post) => {
-								return (
-									<tr>
-										<td>{post}</td>
-									</tr>
-								);
-							})}
-					</tbody>
-				</table>
-			</div>
+			{flag ? (
+				<div>
+					<div>
+						<table>
+							<theader>
+								<th>Top Posts from {subredditName[0]}</th>
+							</theader>
+							<tbody>
+								{postList1 &&
+									postList1.map((post) => {
+										return (
+											<tr>
+												<td>{post}</td>
+											</tr>
+										);
+									})}
+							</tbody>
+						</table>
+					</div>
+					<div>
+						<table>
+							<theader>
+								<th>Top Posts from {subredditName[1]}</th>
+							</theader>
+							<tbody>
+								{postList2 &&
+									postList2.map((post) => {
+										return (
+											<tr>
+												<td>{post}</td>
+											</tr>
+										);
+									})}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			) : (
+				<div></div>
+			)}
 		</div>
 	);
 };
