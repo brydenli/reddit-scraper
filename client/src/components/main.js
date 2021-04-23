@@ -1,63 +1,36 @@
 import './main.css';
 import React, { useState } from 'react';
-import axios from 'axios';
+import One from '../components/num_input/one';
+import Two from '../components/num_input/two';
+import Three from '../components/num_input/three';
+import Four from '../components/num_input/four';
+import Five from '../components/num_input/five';
+
+//add conditional rendering
 
 const Main = () => {
-	const [subreddit, setSubreddit] = useState('');
-	const [postList, setPostList] = useState([]);
+	const [inputs, setInputs] = useState(1);
 
-	const handleSubreddit = (e) => {
-		setSubreddit(e.target.value);
-	};
-
-	const handleSubmit = (e) => {
-		e.preventDefault();
-
-		const reqObj = {
-			subreddit: subreddit,
-		};
-
-		axios.post('http://localhost:3010/', reqObj).then((res) => {
-			setPostList(res.data);
-		});
+	const handleInputs = (e) => {
+		setInputs(e.target.value);
 	};
 
 	return (
 		<div>
 			<h1>Reddit Scraper</h1>
-			<div>
-				<form>
-					<div>
-						<input
-							placeholder='Subreddit Name'
-							value={subreddit}
-							onChange={handleSubreddit}
-						/>
-					</div>
-					<div>
-						<button type='submit' onClick={handleSubmit}>
-							Submit
-						</button>
-					</div>
-				</form>
-				<div>
-					<table>
-						<theader>
-							<th>Top Posts</th>
-						</theader>
-						<tbody>
-							{postList &&
-								postList.map((post) => {
-									return (
-										<tr>
-											<td>{post}</td>
-										</tr>
-									);
-								})}
-						</tbody>
-					</table>
-				</div>
-			</div>
+			<label for='input'>Number of Subreddits to Scrape</label>
+			<input
+				type='number'
+				value={inputs}
+				min='1'
+				max='5'
+				onChange={(e) => handleInputs(e)}
+			/>
+			{inputs == 1 ? <One /> : <div></div>}
+			{inputs == 2 ? <Two /> : <div></div>}
+			{inputs == 3 ? <Three /> : <div></div>}
+			{inputs == 4 ? <Four /> : <div></div>}
+			{inputs == 5 ? <Five /> : <div></div>}
 		</div>
 	);
 };
