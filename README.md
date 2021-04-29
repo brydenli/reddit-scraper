@@ -19,3 +19,6 @@ Great application for scraping sales and free products off subreddits (e.g. r/de
 5. Open a new command line instance and enter the client directory
 6. Run npm start
 7. Scrape some subreddits!
+
+## Demo:
+https://www.youtube.com/watch?v=F3vYzs30F8Y&ab_channel=project-portfolio-bmli
