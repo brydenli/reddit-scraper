@@ -1,6 +1,6 @@
 # reddit-scraper
 
-Web scraper built using React, Express.js, Node.js, and Puppeteer
+Web scraper built using React, Express, Node, and Puppeteer
 
 ## Project Goal:
 
